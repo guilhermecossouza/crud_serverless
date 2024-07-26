@@ -4,6 +4,24 @@ services:
   back-end:
     build: .
     container_name: backend_service
+    environment:
+      AWS_ACCESS_KEY_ID: fakeKey
+      AWS_SECRET_ACCESS_KEY: fakeSecret
     volumes:
-      - ./app/backend:/app
-    command: python app_main.py
+      - ./app/backend:/app/backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_service
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bdUsuarios
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data: {}
