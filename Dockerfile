@@ -14,6 +14,8 @@ WORKDIR /app
 COPY ./app/backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+ENV PYTHONPATH=/app/app/backend
+
 COPY . .
 
 RUN serverless plugin install -n serverless-offline
