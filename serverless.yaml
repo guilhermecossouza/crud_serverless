@@ -13,14 +13,14 @@ plugins:
 
 functions:
   handler:
-    handler: app/backend/my_functions/user_functions.mensagem
+    handler: app/backend/my_functions/user_functions.user_register
     description: função de teste
     runtime: python3.10
     memorySize: 128
     timeout: 3
     events:
       - http:
-          path: mensagem
+          path: user/register/
           method: get
           cors: true
 
