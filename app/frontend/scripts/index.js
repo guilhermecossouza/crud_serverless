@@ -1,4 +1,4 @@
-document.getElementById("frm-usuario").addEventListener("submit",(formulario) => {
+document.getElementById("frm-usuario").addEventListener("submit", async (formulario) => {
     formulario.preventDefault();
     let register = true;
     if(formulario.target.nome.value.trim() === "") {
@@ -17,7 +17,7 @@ document.getElementById("frm-usuario").addEventListener("submit",(formulario) =>
             email: formulario.target.email.value.trim()
         }
 
-        let url = "http://localhost:3000/dev/user/register"
+        let url = "http://localhost:3000/dev/user/register/"
 
         try {
             const response = await fetch(url, {
@@ -28,10 +28,13 @@ document.getElementById("frm-usuario").addEventListener("submit",(formulario) =>
                 body: JSON.stringify(user)
             });
 
-            console.log(response);
+            if(response.ok) {
+                const jsonResponse = await response.json();
+                console.log(jsonResponse);
+            }
 
         } catch (error) {
-            console.log("erro");
+            console.log(error);
         }
     }
 
