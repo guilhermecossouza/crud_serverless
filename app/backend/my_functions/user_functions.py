@@ -1,5 +1,5 @@
-from decorators import decorator
-
-@decorator.methodGET
-def user_register(event, context):
+from decorators.decorator import  config
+import json
+@config
+def database_config(event, context):
     pass

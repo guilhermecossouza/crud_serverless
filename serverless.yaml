@@ -13,15 +13,15 @@ plugins:
 
 functions:
   handler:
-    handler: app/backend/my_functions/user_functions.user_register
-    description: função de teste
+    handler: app/backend/my_functions/user_functions.database_config
+    description: function responsável por verificar as tabelas
     runtime: python3.10
     memorySize: 128
     timeout: 10
     events:
       - http:
-          path: user/register/
-          method: post
+          path: user/config/
+          method: GET
           cors: true
 
 
