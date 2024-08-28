@@ -5,7 +5,13 @@ const api_integration_config = () => {
             "Content-Type": "application/json"
         }    
     }).then(response => {
-        console.log(response)
+        if (response.ok) {
+            console.log("zaca");
+            console.log(response.json())
+        }else {
+            console.log("fudeu")
+        }
+        
     }).catch(error => {
         console.error(error)    
     });
@@ -39,5 +45,18 @@ document.querySelector("#frm-usuario").addEventListener("submit", (event) => {
             "nome": event.target.nome.value.trim(),
             "email": event.target.email.value.trim()
         }
+        fetch("http://localhost:3000/dev/user/create/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(objecUser)
+        }).then(response => {
+            console.log(response.json());
+        }).then(data => {
+            console.log("sucesso:", data);        
+        }).catch((error) => {
+            console.log("Erro:", error);
+        });
     }
 });

@@ -12,7 +12,7 @@ plugins:
   - serverless-offline
 
 functions:
-  handler:
+  database_config:
     handler: app/backend/my_functions/user_functions.database_config
     description: function responsável por verificar as tabelas
     runtime: python3.10
@@ -22,6 +22,18 @@ functions:
       - http:
           path: user/config/
           method: GET
+          cors: true
+
+  create_user:
+    handler: app/backend/my_functions/user_functions.create_user
+    description: function responsável por criar usuário
+    runtime: python3.10
+    memorySize: 128
+    timeout: 10
+    events:
+      - http:
+          path: user/create/
+          method: POST
           cors: true
 
 
