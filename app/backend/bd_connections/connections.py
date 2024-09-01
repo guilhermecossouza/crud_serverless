@@ -9,6 +9,7 @@ def delete_table():
             return "Table excluida com sucasso.."
         except ProgrammingError as e:
             return f"Erro ao excluir tabela de usuarios: {e.msg}"
+ 
         
 def create_table():    
     strSQL = """
@@ -26,4 +27,9 @@ def create_table():
             return "Table criada com sucasso.."
         except ProgrammingError as e:
             return f"Erro ao excluir tabela de usuarios: {e.msg}"
+        
+
+def create_user(nome=None, email=None) -> str:
+    
+    
  
