@@ -16,24 +16,47 @@ const search_users = async () => {
         }).then(
             response => response.json()
         ).then(data => {
-            const users = data[0].dados;        
-            const table_body = document.getElementById("table-users").querySelector("tbody");
+            const data_user = data[0]
+            if(data_user.dadosError[0].error) {
+                alert_error.innerHTML = ""
+                alert_error.textContent = data_user.dadosError[0].message
+                alert_error.style.display = "block";    
+            }else {
+                const table_body = document.getElementById("table-users").querySelector("tbody");
+                data_user.dadosUsuario.forEach((element, indece) => {
+                   
+                    const row = document.createElement("tr"); 
+
+                    const cell_qtd = document.createElement("td");
+                    cell_qtd.textContent = indece + 1;
+
+                    const cell_name = document.createElement("td");
+                    cell_name.textContent = element.nome;
+
+                    const cell_email = document.createElement("td");
+                    cell_email.textContent = element.email;
+
+                    const cell_edit = document.createElement("td");
+                    const cell_edit_icon = document.createElement("i")
+                    cell_edit_icon.setAttribute("class", "fa-regular fa-pen-to-square cls-edit")
+                    cell_edit_icon.setAttribute("data-idUsuaro", ""+element.Id+"")
+                    cell_edit.appendChild(cell_edit_icon)
+
+                    const cell_delete = document.createElement("td");
+                    const cell_delete_icon = document.createElement("i")
+                    cell_delete_icon.setAttribute("class", "fa-solid fa-trash cls-delete")
+                    cell_delete_icon.setAttribute("data-idUsuaro", ""+element.Id+"")
+                    cell_delete.appendChild(cell_delete_icon)
+
+                    row.appendChild(cell_qtd)
+                    row.appendChild(cell_name)
+                    row.appendChild(cell_email)
+                    row.appendChild(cell_edit)
+                    row.appendChild(cell_delete)
+                    table_body.appendChild(row);
+                });
+            }
             
-            table_body.innerHTML = "" ;
-    
-            users.forEach((element) => {
-                const row = document.createElement("tr"); 
-    
-                const cell_name = document.createElement("td");
-                cell_name.textContent = element.nome;
-    
-                const cell_email = document.createElement("td");
-                cell_email.textContent = element.email;    
-                
-                row.appendChild(cell_name);
-                row.appendChild(cell_email);
-                table_body.appendChild(row);
-            });
         }).catch((error) => {
             console.log(error);
         });        
@@ -42,7 +65,7 @@ const search_users = async () => {
     }    
 }
 
-//search_users();
+search_users();
 
 const valid_email = (email) => {
     const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i
@@ -78,4 +101,3 @@ document.querySelector("#btn-insert-user").addEventListener("click", (event) => 
         insert_user(user_add);
     }    
 });
-

@@ -1,25 +1,13 @@
+from bd_connections.connections import insert_user, get_users
 from funcoes.validation import email_validate
 import json
 
 
 def list_users(event, context):
-    response = json.dumps(
-        [
-            {
-                "dados": [
-                    {"nome":"Guilherme001", "email": "guilhermecossouza001@gmail.com"},
-                    {"nome":"Guilherme002", "email": "guilhermecossouza002@gmail.com"},
-                    {"nome":"Guilherme003", "email": "guilhermecossouza003@gmail.com"},
-                    {"nome":"Guilherme004", "email": "guilhermecossouza004@gmail.com"},
-                    {"nome":"Guilherme005", "email": "guilhermecossouza005@gmail.com"},
-                    {"nome":"Guilherme006", "email": "guilhermecossouza006@gmail.com"}
-                ]
-            }            
-        ]
-    )
+    data_users = get_users()
     return {
         "statusCode": 200,
-        "body": response
+        "body": json.dumps(data_users)
     }
     
 def create_user(event, context):
@@ -28,20 +16,22 @@ def create_user(event, context):
         nome = data_user.get("nome")
         email = data_user.get("email")
         if email_validate(email):
+            response = insert_user(nome, email)
             return {
                 "statusCode": 200,
-                "body": json.dumps({"event": event})
+                "body": json.dumps({"mensagem": response}),
+                "headers": json.dumps({"Content-Type": "application/json"})
             }
         else:
             return {
                 "statusCode": 400,
-                "body": "E-mail informado é inválido.",
+                "body": json.dumps({"mensagem": "E-mail informado é inválido."}),
                 "headers": json.dumps({"Content-Type": "application/json"})
             }    
     else:
         return {
             "statusCode": 405,
-            "body": "Méthodo não permitido. Use o POST",
+            "body": json.dumps({"mensagem": "Méthodo não permitido. Use o POST"}),
             "headers": json.dumps({"Content-Type": "application/json"})
         }    
 
