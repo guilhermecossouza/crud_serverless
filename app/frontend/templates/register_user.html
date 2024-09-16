@@ -18,7 +18,7 @@
         <p class="h1">Usuário</p>
     </header>
     <main class="container">
-        <form action="#" id="frm-user">
+        <form id="frm-user">
             <div class="row">
                 <div class="col-6">
                     <div class="mb-3">
@@ -31,19 +31,26 @@
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="user-email" class="form-label">E-mail:</label>
-                        <input type="email" name="user-email" id="user-email" class="form-control" />
+                        <input type="text" name="user-email" id="user-email" class="form-control" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-success" type="button">Cadastrar</button>
+                        <button class="btn btn-success" type="submit">Cadastrar</button>
                         <button class="btn btn-primary" type="button" id="btn-back">Voltar</button>
                     </div>
                 </div>
             </div>
         </form>
+        <div class="row mt-3">
+            <div class="col-6">
+                <div class="alert alert-danger" role="alert" id="form-alert">
+                    Informe o nome e o e-mail
+                </div>
+            </div>
+        </div>
     </main>
     <script src="../scripts/register_user.js"></script>
 </body>

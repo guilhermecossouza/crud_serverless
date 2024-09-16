@@ -37,10 +37,9 @@ btnSearchUsers.addEventListener("click", (event) => {
 tableUsers.addEventListener("click", (event) => {
     if (event.target.closest(".icon-edit")) {
         const buttonEdidt = event.target.closest(".icon-edit");
-        console.log("001");
+        
     }else if(event.target.closest(".icon-delete")) {
         const buttondelete = event.target.closest(".icon-delete");
-        console.log("002");
     }
 });
 
