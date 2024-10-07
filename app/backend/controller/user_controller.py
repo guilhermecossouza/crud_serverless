@@ -1,3 +1,5 @@
+from models.user import UserModel
+
 import json
 import re
 
@@ -36,24 +38,26 @@ def create_user(event, context):
             "body": json.dumps({"message": "Formato de email inválido"}, ensure_ascii=False)
         }
         
-    
-                        
+    object_user = UserModel()  
+    object_user.set_nome(nome)
+    object_user.set_email(email)
+    object_user.create()
+    if object_user.connection_error:
+        return {
+            "statusCode": 500,
+            "body": json.dumps({"message": object_user.connection_error}, ensure_ascii=False)
+        }
+        
     return {
         "statusCode": 200,
-        "body": json.dumps({
-            "message": "Usuário criado com sucesso",
-            "nome": nome,
-            "email": email
-        }, ensure_ascii=False)
+        "body": json.dumps({"message": "Usuário criado com sucesso"}, ensure_ascii=False)
     }
-    
+           
     
 def get_users(event, context):
     return {
         "statusCode": 200,
-        "body": json.dumps({
-            "function": "get_users"
-        }, ensure_ascii=False)
+        "body": json.dumps({"function": "get_users"}, ensure_ascii=False)
     }
     
 def update_user(event, context):

@@ -16,20 +16,33 @@ frmUser.addEventListener("submit", async (event) => {
             nome: nome,
             email: email
         }
-        await fetch("http://localhost:3000/dev/user/insert", {
+        const response = await fetch("http://localhost:3000/dev/user/insert", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(user)
-        })
-        .then(respose => respose.json())
-        .then(data => {
-            console.log(data);            
-        })
-        .catch((erro) => {
-            console.error(erro);            
         });
+
+        const data = await response.json()
+        console.log(response)
+        console.log(data);
+        
+
+        if(!response.ok) {
+            formAlert.removeAttribute("class");
+            formAlert.setAttribute("class", "alert alert-danger");
+            formAlert.textContent = "";
+            formAlert.textContent = data.message;
+            formAlert.style.display = "block";
+            return;
+        }
+        formAlert.removeAttribute("class");
+        formAlert.setAttribute("class", "alert alert-success");
+        formAlert.textContent = "";
+        formAlert.textContent = data.message;
+        formAlert.style.display = "block";        
+        return;
     }else {        
         formAlert.style.display = "block";
     }
