@@ -6,7 +6,6 @@ btnBack.addEventListener("click", (event) => {
     window.location.href = "search_user.html";
 });
 
-
 frmUser.addEventListener("submit", async (event) => {    
     event.preventDefault();
     const nome = document.querySelector("#nome").value.trim();
@@ -25,9 +24,6 @@ frmUser.addEventListener("submit", async (event) => {
         });
 
         const data = await response.json()
-        console.log(response)
-        console.log(data);
-        
 
         if(!response.ok) {
             formAlert.removeAttribute("class");

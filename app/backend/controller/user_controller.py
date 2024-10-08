@@ -55,9 +55,31 @@ def create_user(event, context):
            
     
 def get_users(event, context):
+    if event.get("httpMethod") != "GET":
+        return {
+            "statusCode": 405,
+            "body": json.dumps({"message": "Método não permitido. Use GET"}, ensure_ascii=False)
+        }
+        
+    object_user = UserModel()
+    response = object_user.get_dados_users()
+    if object_user.connection_error:
+        return {
+            "statusCode": 500,
+            "body": json.dumps({"message": object_user.connection_error}, ensure_ascii=False)
+        }
+        
     return {
         "statusCode": 200,
-        "body": json.dumps({"function": "get_users"}, ensure_ascii=False)
+        "body": json.dumps({"message": "", "dados": response}, ensure_ascii=False)
+    }
+    
+def get_users_name_ou_email(event, context):
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "function": "get_users_name_ou_email"
+        }, ensure_ascii=False)
     }
     
 def update_user(event, context):
