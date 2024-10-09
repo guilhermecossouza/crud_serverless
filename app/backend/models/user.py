@@ -32,8 +32,12 @@ class UserModel(ConnectionDataBase):
             except Exception as e:
                 self.connection_error = f"{str(e)}"  
            
-    def get_dados_users(self):
-        strSQL = "SELECT * FROM TbUsuarios ORDER BY nome;"
+    def get_dados_users(self, parameter):
+        strWhere = ""
+        if parameter != "":
+            strWhere = f"WHERE nome like '%{parameter}%'"
+                        
+        strSQL = f"SELECT * FROM TbUsuarios {strWhere} ORDER BY nome;"
         with self.open_connect() as conn:
             try:
                 cursor = conn.cursor()

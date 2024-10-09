@@ -20,21 +20,10 @@ functions:
     timeout: 10
     events:
       - http:
-          path: user/insert/
-          method: POST
-          cors: true
-      - http:
-          path: user/list/
+          path: user/list/{parameter}
           method: GET
           cors: true
-      - http:
-          path: user/edit/
-          method: PUT
-          cors: true
-      - http:
-          path: user/delete/
-          method: DELETE
-          cors: true
+      
 
 custom:
   serverless-offline:

@@ -1,25 +1,21 @@
-from controller.user_controller import create_user, get_users, update_user, delete_user
+from controller.user_controller import get_users
 
 import json
 
-routes = {
-    "POST /user/insert": create_user,
-    "GET /user/list": get_users,
-    "PUT /user/edit/{user_id}": update_user,
-    "DELETE /user/delete/{user_id}": update_user    
-}
+routes = [
+    {"http_method": "GET", "path": "/user/list/", "parameter": "{parameter}", "function": get_users}
+]
 
 def handler(event, context):
-    http_method = event.get("httpMethod")
-    path = event.get("path")
-    route_key = f"{http_method} {path}"
+    http_method = event.get("httpMethod", None)
+    path = event.get("path", None)    
+    path, parameter = path.split("data=", 1)
     
-    print(f"path-> {path}")
-    
-    if route_key in routes:
-        return routes[route_key](event, context) 
-    else:
-        return {
-            "statusCode": 404,
-            "body": json.dumps({"message": "Url não encontrada."})   
-        }
+    for route in routes:
+        if http_method == route["http_method"] and path == route["path"]:
+            return route["function"](event, context, parameter)
+        
+    return {
+        "statusCode": 404,
+        "body": json.dumps({"message": "Url não encontrada."}, ensure_ascii=False)   
+    }

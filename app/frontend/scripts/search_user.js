@@ -3,8 +3,9 @@ const tableUser = document.querySelector("#table-user");
 const btnSearchUsers = document.querySelector("#btn-search-users");
 const inputBusca = document.querySelector("#nome-emai");
 
-const getUsers = async () => {
-    response = await fetch("http://localhost:3000/dev/user/list/", {
+const getUsers = async (search) => {
+    const parameter =  new URLSearchParams({data : search})
+    response = await fetch(`http://localhost:3000/dev/user/list/${parameter.toString()}`, {
         method: "GET",
         headers: {
             "Content-Type": "apllication/json"
@@ -20,8 +21,7 @@ const getUsers = async () => {
     }
     const tbody = tableUser.getElementsByTagName("tbody")[0]
     data.dados.forEach((element) => {
-        console.log(element);
-        
+       
         const row = document.createElement("tr");
 
         const cellId = document.createElement("td");
@@ -58,22 +58,14 @@ const getUsers = async () => {
     });
 }
 
-getUsers();
+getUsers("");
 
-//"http://localhost:3000/dev/user/list/name/"+opcao+"="+valueOpcao+""
 btnSearchUsers.addEventListener("click", async (event) => { 
-    if (inputBusca.value.trim() !== "") {
-        const name_user_or_email = inputBusca.value.trim()
-        const response = await fetch(`http://localhost:3000/dev/user/list/search_data/${encodeURIComponent(name_user_or_email)}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        
-        console.log(response);
-        console.log(response.json());
-        
-
+    const tbody = tableUser.getElementsByTagName("tbody")[0]
+    tbody.innerHTML = "";
+    if (inputBusca.value.trim() !== "") {        
+        getUsers(inputBusca.value.trim());
+    }else {
+        getUsers("");
     }
 });
