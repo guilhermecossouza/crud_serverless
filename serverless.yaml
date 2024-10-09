@@ -23,6 +23,14 @@ functions:
           path: user/list/{parameter}
           method: GET
           cors: true
+      - http:
+          path: user/delete/{parameter}
+          method: DELETE
+          cors: true
+      - http:
+          path: user/insert/
+          method: POST
+          cors: true
       
 
 custom:

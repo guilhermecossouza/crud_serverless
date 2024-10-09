@@ -59,6 +59,23 @@ class UserModel(ConnectionDataBase):
                     dict_dados_bd.clear()
                 
                 return list_dados_bd    
+            
+    def delete_user(self, parameter):
+        strSQl = "DELETE FROM TbUsuarios WHERE id = %s"
+        strWhere = (parameter,)
+        with self.open_connect() as conn:
+            try:
+                cursor = conn.cursor()
+                cursor.execute(strSQl, strWhere)
+                conn.commit()
+            except ProgrammingError as e:
+                self.connection_error = f"Erro: {str(e.msg)}"
+            except Exception as e:
+                self.connection_error = f"Erro: {str(e)}"
+            else:
+                return "Usuário deletado com sucesso"
+            
+        
                 
         
     

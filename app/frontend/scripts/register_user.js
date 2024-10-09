@@ -15,7 +15,7 @@ frmUser.addEventListener("submit", async (event) => {
             nome: nome,
             email: email
         }
-        const response = await fetch("http://localhost:3000/dev/user/insert", {
+        const response = await fetch("http://localhost:3000/dev/user/insert/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
