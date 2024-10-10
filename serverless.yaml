@@ -31,6 +31,10 @@ functions:
           path: user/insert/
           method: POST
           cors: true
+      - http:
+          path: user/edit/{parameter}
+          method: PUT
+          cors: true
       
 
 custom:

@@ -1,11 +1,12 @@
-from controller.user_controller import get_users, delete_user, create_user
+from controller.user_controller import get_users, delete_user, create_user, update_user
 
 import json
 
 routes = [
     {"http_method": "GET", "path": "/user/list/", "parameter": "{parameter}", "function": get_users},
     {"http_method": "DELETE", "path": "/user/delete/", "parameter": "{parameter}", "function": delete_user},
-    {"http_method": "POST", "path": "/user/insert", "parameter": "{parameter}", "function": create_user}
+    {"http_method": "POST", "path": "/user/insert", "parameter": "{parameter}", "function": create_user},
+    {"http_method": "PUT", "path": "/user/edit/", "parameter": "{parameter}", "function": update_user}
 ]
 
 def handler(event, context):

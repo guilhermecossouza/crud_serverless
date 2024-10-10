@@ -75,6 +75,45 @@ class UserModel(ConnectionDataBase):
             else:
                 return "Usuário deletado com sucesso"
             
+    def get_dados_user(self, parameter):
+        strSQl = "SELECT * FROM TbUsuarios WHERE id = %s"
+        strWhere = (parameter,)    
+        with self.open_connect() as conn:
+            try:
+                cursor = conn.cursor()
+                cursor.execute(strSQl, strWhere)
+                dados_users = cursor.fetchall()
+            except ProgrammingError as e:
+                self.connection_error = f"Erro: {str(e.msg)}"
+            except Exception as e:
+                self.connection_error = f"Erro: {str(e)}"
+            else:
+                dict_dados_bd = dict()
+                list_dados_bd = list()
+                
+                for dado_user in dados_users:
+                    dict_dados_bd["idUsuario"] = dado_user[0]
+                    dict_dados_bd["nome"] = dado_user[1]
+                    dict_dados_bd["email"] = dado_user[2]
+                    list_dados_bd.append(dict_dados_bd.copy())
+                    dict_dados_bd.clear()
+                
+                return list_dados_bd 
+            
+    def update_data_user(self, parameter):
+        strSQL = "UPDATE TbUsuarios SET nome = %s, email = %s WHERE Id = %s"
+        data = (self.nome, self.email, parameter)
+        with self.open_connect() as conn:
+            try:
+                cursor = conn.cursor()
+                cursor.execute(strSQL, data)
+                conn.commit()
+            except ProgrammingError as e:
+                self.connection_error = f"Erro: {str(e.msg)}"
+            except Exception as e:
+                self.connection_error = f"Erro: {str(e)}"
+            else:
+                return "Usuário alterado com sucesso."
         
                 
         

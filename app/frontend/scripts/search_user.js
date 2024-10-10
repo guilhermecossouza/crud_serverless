@@ -3,6 +3,11 @@ const tableUser = document.querySelector("#table-user");
 const btnSearchUsers = document.querySelector("#btn-search-users");
 const inputBusca = document.querySelector("#nome-emai");
 
+const btnRegister = document.querySelector("#btn-register-user");
+btnRegister.addEventListener("click", (event) => {
+    window.location.href = "register_user.html?register=1";
+});
+
 alertMessage.style.display = "none"
 
 const getUsers = async (search) => {
